@@ -10,3 +10,7 @@ function readCsv(filePath) {
         .on("error", (error) => reject(error));
     });
 }
+
+function filterData(data) {
+    return data.filter((row) => !Object.values(row).same((value) => !value));
+}
