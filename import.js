@@ -46,3 +46,11 @@ async function getReviewCounts(filePath) {
     )`;
     await connection.execute(sql);
   }
+
+  async function insertData(connection, tableName, data, reviewCounts) {
+    for (const row of data) {
+      const reviewCount = reviewCounts[row.app_name] || 0;
+      const sql = `INSERT INTO ${tableName} (rank, name, platform, year, genre, publisher, NA_sales, EU_sales, JP_sales, Other_sales, Global_sales, number_of_reviews) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+      await connection.execute(sql, [row.rank, row.name, row.platform, row.year, row.genre, row.publisher, row.NA_sales, row.EU_sales, row.JP_sales, row.Other_sales, row.Global_sales, reviewCount]);
+    }
+  }
